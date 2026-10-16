@@ -1,0 +1,293 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>พจนานุกรมหมอปาตานี</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: pocket reference — sticky search band, single reading column (max 760px), tabs for dictionary / dialogues / practice / reading guide */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --ink:#14251f; --muted:#5b6b64; --line:#d9e0db;
+  --accent:#0f6b55; --accent-soft:#dcefe7; --warn:#a4570c; --warn-soft:#fbecd9; --doc:#0f6b55; --pt:#f0e6d2;
+  --f-body:"Anuphan","Noto Sans Thai",system-ui,sans-serif;
+  --f-jawi:"Noto Naskh Arabic","Scheherazade New","Traditional Arabic",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1714; --surface:#16211d; --ink:#e6eee9; --muted:#9aaba3; --line:#26352f;
+  --accent:#5cc7a3; --accent-soft:#1d3a31; --warn:#f0b26b; --warn-soft:#3a2a17; --doc:#2e8c70; --pt:#2c2a22; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1714; --surface:#16211d; --ink:#e6eee9; --muted:#9aaba3; --line:#26352f;
+  --accent:#5cc7a3; --accent-soft:#1d3a31; --warn:#f0b26b; --warn-soft:#3a2a17; --doc:#2e8c70; --pt:#2c2a22; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:var(--f-body);font-size:16px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{padding-block:20px 8px}
+.brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+h1{font-size:1.5rem;font-weight:700;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.brand .jawi{font-family:var(--f-jawi);font-size:1.25rem;color:var(--accent)}
+.sub{color:var(--muted);font-size:.9rem;margin:2px 0 0}
+nav.tabs{display:flex;gap:4px;margin-top:14px;border-bottom:1px solid var(--line);overflow-x:auto}
+nav.tabs button{font:inherit;font-weight:500;background:none;border:0;padding:10px 12px;color:var(--muted);border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.sticky{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:12px 10px}
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 12px}
+.search:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.search input{flex:1;min-width:0;font:inherit;font-size:1.05rem;border:0;background:none;color:var(--ink);padding:12px 0;outline:none}
+.search svg{flex:none;color:var(--muted)}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-top:10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{font:inherit;font-size:.85rem;white-space:nowrap;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.opts{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.85rem;padding-top:8px}
+.opts label{display:inline-flex;gap:6px;align-items:center;cursor:pointer}
+.catnote{font-size:.88rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:4px 0 12px}
+.group{font-size:.78rem;font-weight:600;letter-spacing:.06em;color:var(--muted);margin:18px 0 6px;text-transform:uppercase}
+ul.list{list-style:none;margin:0;padding:0;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+li.w{display:grid;grid-template-columns:1fr auto;gap:2px 12px;padding:12px 14px;border-top:1px solid var(--line)}
+li.w:first-child{border-top:0}
+.w .say{font-size:1.2rem;font-weight:600;line-height:1.35;min-width:0;overflow-wrap:anywhere}
+.w .mean{grid-column:1;color:var(--ink);opacity:.85;min-width:0}
+.w .meta{grid-column:1/-1;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.w .rumi{font-family:var(--f-mono);font-size:.85rem;color:var(--muted)}
+.w .jawi{font-family:var(--f-jawi);font-size:1.2rem;direction:rtl;color:var(--accent);margin-left:auto}
+.w .acts{grid-row:1/3;grid-column:2;display:flex;gap:2px;align-items:flex-start}
+.icon{font:inherit;background:none;border:0;color:var(--muted);width:36px;height:36px;border-radius:8px;display:grid;place-items:center;cursor:pointer}
+.icon:hover{background:var(--accent-soft);color:var(--accent)}
+.icon[aria-pressed="true"]{color:var(--warn)}
+.flag{display:inline-block;font-size:.72rem;font-weight:600;color:var(--warn);background:var(--warn-soft);border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle;white-space:nowrap}
+.tag{font-size:.75rem;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:1px 7px;margin-right:6px;white-space:nowrap}
+.hide-jawi .jawi{display:none}
+.empty{padding:32px 16px;text-align:center;color:var(--muted)}
+.count{font-variant-numeric:tabular-nums}
+mark{background:var(--warn-soft);color:inherit;border-radius:3px}
+/* dialogues */
+.scene{margin:20px 0 28px}
+.scene h2{font-size:1.05rem;margin:0 0 10px}
+.turn{display:flex;margin:8px 0}
+.turn.pt{justify-content:flex-end}
+.bubble{max-width:86%;min-width:0;padding:10px 13px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.turn.doc .bubble{border-top-left-radius:4px}
+.turn.pt .bubble{background:var(--pt);border-top-right-radius:4px}
+.who{font-size:.72rem;font-weight:600;letter-spacing:.05em;color:var(--muted)}
+.bubble .say{font-size:1.08rem;font-weight:600}
+.bubble .mean{font-size:.92rem}
+.bubble .rumi{font-family:var(--f-mono);font-size:.8rem;color:var(--muted)}
+.bubble .jawi{font-family:var(--f-jawi);font-size:1.1rem;direction:rtl;text-align:right;color:var(--accent)}
+/* practice */
+.prac-top{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding-block:14px 6px}
+select{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 10px;max-width:100%}
+.card{margin:14px 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;min-height:240px;display:grid;place-items:center;text-align:center;padding:28px 20px;cursor:pointer;user-select:none}
+.card .q{font-size:1.6rem;font-weight:700;text-wrap:balance}
+.card .hint{color:var(--muted);font-size:.85rem;margin-top:10px}
+.card .a{font-size:1.9rem;font-weight:700;color:var(--accent)}
+.card .jawi{font-family:var(--f-jawi);font-size:1.6rem;direction:rtl;margin-top:6px}
+.card .rumi{font-family:var(--f-mono);color:var(--muted)}
+.prac-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{font:inherit;font-weight:600;border-radius:12px;padding:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.progress{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:6px}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .25s}
+.stat{font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+/* guide */
+.prose{max-width:65ch}
+.prose h2{font-size:1.1rem;margin:24px 0 8px}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+th{border-top:0;font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+td code{font-family:var(--f-mono);font-size:.85rem}
+footer{color:var(--muted);font-size:.8rem;padding-block:28px 32px}
+button:focus-visible,select:focus-visible,input:focus-visible,.card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:10px;font-size:.88rem;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><h1>พจนานุกรมหมอปาตานี</h1><span class="jawi" lang="ms-Arab">قاموس بومو</span></div>
+    <p class="sub">คำศัพท์และประโยคมลายูถิ่นปาตานีสำหรับแพทย์ · คำอ่านตามพจนานุกรม ม.อ. ปัตตานี</p>
+    <nav class="tabs" role="tablist">
+      <button role="tab" id="t-dict" aria-selected="true" data-tab="dict">คำศัพท์</button>
+      <button role="tab" id="t-dlg" aria-selected="false" data-tab="dlg">บทสนทนา</button>
+      <button role="tab" id="t-prac" aria-selected="false" data-tab="prac">ฝึกจำ</button>
+      <button role="tab" id="t-guide" aria-selected="false" data-tab="guide">วิธีอ่าน</button>
+    </nav>
+  </header>
+
+  <section id="p-dict">
+    <div class="sticky">
+      <label class="search" for="q">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input id="q" type="search" placeholder="พิมพ์คำไทย คำอ่าน หรือรูมี เช่น ปวดท้อง, ซาเกะ, sakit" autocomplete="off">
+      </label>
+      <div class="chips" id="chips"></div>
+      <div class="opts">
+        <span class="count" id="count"></span>
+        <span style="display:flex;gap:14px;flex-wrap:wrap">
+          <label><input type="checkbox" id="optJawi" checked> แสดงยาวี</label>
+          <label><input type="checkbox" id="optVer"> เฉพาะคำที่ตรวจแล้ว</label>
+        </span>
+      </div>
+    </div>
+    <div id="results"></div>
+  </section>
+
+  <section id="p-dlg" hidden><div id="dialogs"></div></section>
+
+  <section id="p-prac" hidden>
+    <div class="prac-top">
+      <select id="pCat" aria-label="หมวดที่ฝึก"></select>
+      <select id="pDir" aria-label="ทิศทาง">
+        <option value="th">ดูคำไทย → นึกคำมลายู</option>
+        <option value="ml">ดูคำมลายู → นึกความหมาย</option>
+      </select>
+    </div>
+    <div class="stat" id="pStat"></div>
+    <div class="progress"><i id="pBar"></i></div>
+    <div class="card" id="card" tabindex="0" role="button" aria-label="แตะเพื่อพลิกบัตร"></div>
+    <div class="prac-btns">
+      <button class="btn" id="pAgain">ยังจำไม่ได้</button>
+      <button class="btn primary" id="pGot">จำได้แล้ว</button>
+    </div>
+  </section>
+
+  <section id="p-guide" hidden><div class="prose" id="guide"></div></section>
+
+  <footer>อ้างอิง: พจนานุกรม มลายูถิ่นปาตานี–ไทย / ไทย–มลายูถิ่นปาตานี โครงการจัดตั้งสถาบันสมุทรรัฐเอเชียตะวันออกเฉียงใต้ศึกษา มหาวิทยาลัยสงขลานครินทร์ วิทยาเขตปัตตานี พิมพ์ครั้งที่ 2 (2553). ป้าย "ยังไม่ยืนยัน" คือคำที่ไม่พบในพจนานุกรม ควรให้เจ้าของภาษาตรวจก่อนใช้ ประโยคเรียบเรียงจากคำในพจนานุกรม ไม่ได้ยกมาทั้งประโยค</footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const DATA = {"cats": [{"id": 1, "name": "อวัยวะและส่วนของร่างกาย", "note": "หมายเหตุ: \"ฮาตี\" ใช้ทั้งตับและใจ และ \"ตาแง\" ชาวบ้านมักใช้รวมถึงแขนด้วย ควรให้ผู้ป่วยชี้ตำแหน่งประกอบ"}, {"id": 2, "name": "อาการ", "note": "หมายเหตุ: เลือดออกทางช่องคลอดผู้ป่วยมักเลี่ยงพูดตรงๆ ดูหมวด 6"}, {"id": 3, "name": "ความรู้สึกและอารมณ์", "note": "หมายเหตุ: หากผู้ป่วยพูดทำนอง \"เตาะ เนาะ ฮีโดะ\" ให้ถามต่อตรงๆ และส่งต่อตามแนวทางประเมินความเสี่ยงของโรงพยาบาล ควรใช้ล่ามเสมอ"}, {"id": 4, "name": "การบอกระดับความรุนแรงและเวลา", "note": ""}, {"id": 5, "name": "ชื่อโรค", "note": "หมายเหตุ: \"บาเราะฮ\" ในภาษามาตรฐานอาจหมายถึงมะเร็งได้ แต่พจนานุกรมนี้ใช้ในความหมายฝี ควรถามให้แน่ใจก่อนแจ้งการวินิจฉัย และแจ้งโรคร้ายแรงต่อหน้าครอบครัวด้วยความระมัดระวัง"}, {"id": 6, "name": "สูติ-นรีเวชและเด็ก", "note": "หมายเหตุ: ช่วงหลังคลอดมีข้อปฏิบัติทางศาสนาและความเชื่อเรื่องอาหารแสลง (ผิดสำแดง ดูหมวด 7) ควรถามก่อนให้คำแนะนำเรื่องอาหาร"}, {"id": 7, "name": "ยาและการรักษา", "note": "หมายเหตุ: พจนานุกรมยกตัวอย่าง \"ตัวเขาเป็นผื่นเพราะผิดสำแดง\" ชาวบ้านอาจเรียกอาการแพ้ยาหรือแพ้อาหารว่าผิดสำแดง ควรถามต่อว่าเกิดหลังกินยาตัวไหน"}, {"id": 8, "name": "ประโยคซักประวัติและตรวจร่างกาย", "note": "หมายเหตุ: คำปฏิเสธในพจนานุกรมคือ \"เตาะ\" (ไม่) เติมท้ายประโยคและขึ้นเสียงท้ายเพื่อถามแบบ \"…ไหม\" หนังสือระบุว่าทำนองเสียงเปลี่ยนประโยคบอกเล่าเป็นคำถามได้ คำว่า \"ฉัน\" แบบสุภาพคือ อามอ"}, {"id": 9, "name": "ศาสนาและวัฒนธรรมที่หมอควรรู้", "note": "ข้อควรรู้: ศาสนาอิสลามให้ฝังศพเร็วภายใน 24 ชั่วโมง ครอบครัวมักปฏิเสธการผ่าศพ ควรปรึกษาญาติและอิหม่ามก่อน และผู้ป่วยหญิงหลายคนต้องการให้แพทย์หญิงตรวจหรือมีพยาบาลหญิงอยู่ด้วย"}, {"id": 11, "name": "ประโยคที่ควรรู้ตามสถานการณ์", "note": "หมายเหตุ: ประโยคแจ้งข่าวร้ายหรือการวินิจฉัยร้ายแรงไม่ควรใช้ประโยคสำเร็จรูป ให้ใช้ล่ามโรงพยาบาลเสมอ"}], "words": [{"c": 1, "sub": null, "j": "تبوه", "r": "tubuh", "p": "ตูโบะฮ", "m": "ร่างกาย ตัว", "x": false}, {"c": 1, "sub": null, "j": "کڤالا", "r": "kepala", "p": "กือปาลอ, 'ปาลอ", "m": "ศีรษะ หัว", "x": false}, {"c": 1, "sub": null, "j": "رمبوت", "r": "rambut", "p": "ราโมะ", "m": "ผม", "x": false}, {"c": 1, "sub": null, "j": "موک", "r": "muka", "p": "มูกอ", "m": "ใบหน้า", "x": false}, {"c": 1, "sub": null, "j": "مات", "r": "mata", "p": "มาตอ", "m": "ตา", "x": false}, {"c": 1, "sub": null, "j": "تليڠا", "r": "telinga", "p": "ตือลีงอ", "m": "หู", "x": false}, {"c": 1, "sub": null, "j": "هيدوڠ", "r": "hidung", "p": "อีดง, ฮีดง", "m": "จมูก", "x": false}, {"c": 1, "sub": null, "j": "مولوت", "r": "mulut", "p": "มูโละ", "m": "ปาก", "x": false}, {"c": 1, "sub": null, "j": "ڬيڬي", "r": "gigi", "p": "กีกี", "m": "ฟัน", "x": false}, {"c": 1, "sub": null, "j": "ليده", "r": "lidah", "p": "ลีเดาะฮ", "m": "ลิ้น", "x": false}, {"c": 1, "sub": null, "j": "حلقوم", "r": "halkum", "p": "ฮาลือกง, 'ลือกง", "m": "คอหอย", "x": false}, {"c": 1, "sub": null, "j": "تڠکوق", "r": "tengkuk", "p": "ตือเกาะ", "m": "คอ ลำคอ", "x": false}, {"c": 1, "sub": null, "j": "بهو", "r": "bahu", "p": "บาฮู, บา-อู", "m": "ไหล่", "x": false}, {"c": 1, "sub": null, "j": "دادا", "r": "dada", "p": "ดาดอ", "m": "หน้าอก", "x": false}, {"c": 1, "sub": null, "j": "کوڤيق", "r": "kopek", "p": "กอแปะ", "m": "เต้านม", "x": false}, {"c": 1, "sub": null, "j": "ڤروت", "r": "perut", "p": "ปือโระ", "m": "ท้อง", "x": false}, {"c": 1, "sub": null, "j": "ڤوست", "r": "pusat", "p": "ปูซะ", "m": "สะดือ", "x": false}, {"c": 1, "sub": null, "j": "بلاکڠ", "r": "belakang", "p": "บือลาแก", "m": "หลัง", "x": false}, {"c": 1, "sub": null, "j": "ڤيڠڬڠ", "r": "pinggang", "p": "ปีแง", "m": "เอว", "x": false}, {"c": 1, "sub": null, "j": "تاڠن", "r": "tangan", "p": "ตาแง", "m": "มือ", "x": false}, {"c": 1, "sub": null, "j": "لڠن", "r": "lengan", "p": "ลือแง", "m": "แขน", "x": false}, {"c": 1, "sub": null, "j": "جاري", "r": "jari", "p": "ยารี", "m": "นิ้ว", "x": false}, {"c": 1, "sub": null, "j": "کاکي", "r": "kaki", "p": "กากี", "m": "ขา เท้า", "x": false}, {"c": 1, "sub": null, "j": "لوتوت", "r": "lutut", "p": "ลูตุ", "m": "เข่า", "x": false}, {"c": 1, "sub": null, "j": "بتيس", "r": "betis", "p": "บือติฮ", "m": "น่อง", "x": false}, {"c": 1, "sub": null, "j": "ڤوڠڬوڠ", "r": "punggung", "p": "ปูงง", "m": "ก้น", "x": false}, {"c": 1, "sub": null, "j": "کوليت", "r": "kulit", "p": "กูเละ", "m": "ผิวหนัง", "x": false}, {"c": 1, "sub": null, "j": "تولڠ", "r": "tulang", "p": "ตูแล", "m": "กระดูก", "x": false}, {"c": 1, "sub": null, "j": "تولڠ بلاکڠ", "r": "tulang belakang", "p": "ตูแล บือลาแก", "m": "กระดูกสันหลัง", "x": false}, {"c": 1, "sub": null, "j": "سندي", "r": "sendi", "p": "ซือนี", "m": "ข้อต่อ", "x": false}, {"c": 1, "sub": null, "j": "اوتق", "r": "otak", "p": "ออเตาะ", "m": "สมอง", "x": false}, {"c": 1, "sub": null, "j": "جنتوڠ", "r": "jantung", "p": "ยาตง", "m": "หัวใจ", "x": false}, {"c": 1, "sub": null, "j": "—", "r": "—", "p": "จือลือปง", "m": "ปอด (คำถิ่น)", "x": false}, {"c": 1, "sub": null, "j": "هاتي", "r": "hati", "p": "ฮาตี", "m": "ตับ (และแปลว่า \"ใจ\")", "x": false}, {"c": 1, "sub": null, "j": "بواه ڤيڠڬڠ", "r": "buah pinggang", "p": "บูเวาะฮ ปีแง", "m": "ไต", "x": false}, {"c": 1, "sub": null, "j": "کيسارن ماکنن", "r": "kisaran makanan", "p": "กีซาแร มาแกแน", "m": "กระเพาะอาหาร", "x": false}, {"c": 1, "sub": null, "j": "اورت ڤروت", "r": "urat perut", "p": "ออระ ปือโระ", "m": "ลำไส้", "x": false}, {"c": 1, "sub": null, "j": "ڤرانقن", "r": "peranakan", "p": "ปือราเนาะแก", "m": "มดลูก", "x": false}, {"c": 1, "sub": null, "j": "داره", "r": "darah", "p": "ดาเราะฮ", "m": "เลือด", "x": false}, {"c": 1, "sub": null, "j": "اورت", "r": "urat", "p": "ออระ", "m": "เส้นเอ็น เส้น", "x": false}, {"c": 1, "sub": null, "j": "اورت داره", "r": "urat darah", "p": "ออระ ดาเราะฮ", "m": "เส้นเลือด", "x": false}, {"c": 2, "sub": null, "j": "ساکيت", "r": "sakit", "p": "ซาเกะ", "m": "ป่วย เจ็บ ปวด", "x": false}, {"c": 2, "sub": null, "j": "ساکيت کڤالا", "r": "sakit kepala", "p": "ซาเกะ กือปาลอ", "m": "ปวดศีรษะ", "x": false}, {"c": 2, "sub": null, "j": "ڤنيڠ کڤالا", "r": "pening kepala", "p": "ปือนิง กือปาลอ", "m": "เวียนหัว มึนหัว", "x": false}, {"c": 2, "sub": null, "j": "تق خبر", "r": "tak khabar", "p": "เตาะ กาบา", "m": "หมดสติ ไม่รู้สึกตัว", "x": false}, {"c": 2, "sub": null, "j": "—", "r": "—", "p": "ซือเลาะ", "m": "สลบ", "x": false}, {"c": 2, "sub": null, "j": "دمم", "r": "demam", "p": "ดือแม", "m": "ไข้", "x": false}, {"c": 2, "sub": null, "j": "ڤانس", "r": "panas", "p": "ปานะฮ", "m": "ร้อน (ตัวร้อน = ตูโบะฮ ปานะฮ)", "x": false}, {"c": 2, "sub": null, "j": "سجوق", "r": "sejuk", "p": "ซือโยะ", "m": "หนาว", "x": false}, {"c": 2, "sub": null, "j": "کتر", "r": "ketar", "p": "กือตา", "m": "สั่น (หนาวสั่น = ซือโยะ อาจี กือตา)", "x": false}, {"c": 2, "sub": null, "j": "باتوق", "r": "batuk", "p": "บาโตะ", "m": "ไอ", "x": false}, {"c": 2, "sub": null, "j": "دهق", "r": "dahak", "p": "รอเฮาะ", "m": "เสมหะ", "x": false}, {"c": 2, "sub": null, "j": "سلسما", "r": "selesema", "p": "'ซือมอ", "m": "หวัด", "x": false}, {"c": 2, "sub": null, "j": "اءير هيدوڠ", "r": "air hidung", "p": "อา-เอ อีดง", "m": "น้ำมูก", "x": false}, {"c": 2, "sub": null, "j": "لله", "r": "lelah", "p": "ลือเลาะฮ", "m": "หอบ หายใจไม่ทัน", "x": false}, {"c": 2, "sub": null, "j": "مڽاوا", "r": "menyawa", "p": "มือญาวอ", "m": "หายใจ", "x": false}, {"c": 2, "sub": null, "j": "ساکيت دادا", "r": "sakit dada", "p": "ซาเกะ ดาดอ", "m": "เจ็บหน้าอก", "x": false}, {"c": 2, "sub": null, "j": "بردبر", "r": "berdebar", "p": "บือดือบา", "m": "ใจสั่น", "x": true}, {"c": 2, "sub": null, "j": "ساکيت حلقوم", "r": "sakit halkum", "p": "ซาเกะ 'ลือกง", "m": "เจ็บคอ", "x": false}, {"c": 2, "sub": null, "j": "الون ڤروت", "r": "alun perut", "p": "อาลง ปือโระ", "m": "คลื่นไส้", "x": false}, {"c": 2, "sub": null, "j": "موته", "r": "muntah", "p": "มูเตาะฮ", "m": "อาเจียน", "x": false}, {"c": 2, "sub": null, "j": "سنق ڤروت", "r": "senak perut", "p": "ซือเนาะ ปือโระ", "m": "ปวดท้อง", "x": false}, {"c": 2, "sub": null, "j": "—", "r": "—", "p": "ซอเอาะฮ", "m": "แน่นท้อง (เช่น กินมากเกิน)", "x": false}, {"c": 2, "sub": null, "j": "چيريت", "r": "cirit", "p": "จีเระ", "m": "ท้องเสีย", "x": true}, {"c": 2, "sub": null, "j": "سمبليت", "r": "sembelit", "p": "ซือมือเละ", "m": "ท้องผูก", "x": true}, {"c": 2, "sub": null, "j": "بواڠ اءير", "r": "buang air", "p": "บูแว อา-เอ", "m": "ขับถ่าย", "x": false}, {"c": 2, "sub": null, "j": "کنچيڠ", "r": "kencing", "p": "กือจิง", "m": "ปัสสาวะ", "x": false}, {"c": 2, "sub": null, "j": "کنچيڠ داره", "r": "kencing darah", "p": "กือจิง ดาเราะฮ", "m": "ปัสสาวะเป็นเลือด", "x": false}, {"c": 2, "sub": null, "j": "تاهي", "r": "tahi", "p": "ตาฮิ", "m": "อุจจาระ ขี้", "x": false}, {"c": 2, "sub": null, "j": "ڬاتل", "r": "gatal", "p": "กาตา", "m": "คัน", "x": false}, {"c": 2, "sub": null, "j": "بڠکق", "r": "bengkak", "p": "บือเกาะ", "m": "บวม", "x": false}, {"c": 2, "sub": null, "j": "—", "r": "—", "p": "กือแบ ดาเราะฮ", "m": "ห้อเลือด", "x": false}, {"c": 2, "sub": null, "j": "لوک", "r": "luka", "p": "ลูกอ", "m": "แผล", "x": false}, {"c": 2, "sub": null, "j": "ڤاروت", "r": "parut", "p": "ปาโระ", "m": "แผลเป็น", "x": false}, {"c": 2, "sub": null, "j": "کبس", "r": "kebas", "p": "กือบะฮ", "m": "ชา", "x": false}, {"c": 2, "sub": null, "j": "لمه", "r": "lemah", "p": "ลือมะฮ", "m": "อ่อนแรง", "x": true}, {"c": 2, "sub": null, "j": "ليتيه", "r": "letih", "p": "ลือเตะฮ", "m": "อ่อนเพลีย เหนื่อย", "x": false}, {"c": 2, "sub": null, "j": "—", "r": "—", "p": "แ'ซเตาะ", "m": "ตะคริว กล้ามเนื้อเกร็งกระตุก", "x": false}, {"c": 2, "sub": null, "j": "—", "r": "—", "p": "ตีโด เตาะ ยือนือรอ", "m": "นอนไม่หลับ", "x": false}, {"c": 2, "sub": null, "j": "مڠنتوق", "r": "mengantuk", "p": "มืองาโตะ", "m": "ง่วง", "x": false}, {"c": 2, "sub": null, "j": "لاڤر", "r": "lapar", "p": "ลาปา", "m": "หิว", "x": false}, {"c": 2, "sub": null, "j": "کونيڠ", "r": "kuning", "p": "กูนิง", "m": "เหลือง (ตัวเหลือง ตาเหลือง)", "x": false}, {"c": 2, "sub": null, "j": "ڤوچت", "r": "pucat", "p": "ปูจะ", "m": "ซีด (หน้าซีด = มูกอ ปูจะ)", "x": false}, {"c": 2, "sub": null, "j": "کوروس", "r": "kurus", "p": "กูรุฮ", "m": "ผอมลง", "x": true}, {"c": 2, "sub": null, "j": "سدو", "r": "sedu", "p": "'ซือดู", "m": "สะอึก", "x": false}, {"c": 2, "sub": null, "j": "بوتا", "r": "buta", "p": "บูตอ", "m": "ตาบอด", "x": false}, {"c": 3, "sub": "ลักษณะความเจ็บ/ความรู้สึกทางกาย", "j": "ڤديه", "r": "pedih", "p": "ปือเดะฮ", "m": "แสบ เจ็บแสบ", "x": false}, {"c": 3, "sub": "ลักษณะความเจ็บ/ความรู้สึกทางกาย", "j": "ڤانس ڤديه", "r": "panas pedih", "p": "ปานะฮ ปือเดะฮ", "m": "แสบร้อน", "x": false}, {"c": 3, "sub": "ลักษณะความเจ็บ/ความรู้สึกทางกาย", "j": "ڤانس دالم", "r": "panas dalam", "p": "ปานะฮ ดาแล", "m": "ร้อนใน", "x": false}, {"c": 3, "sub": "ลักษณะความเจ็บ/ความรู้สึกทางกาย", "j": "برت", "r": "berat", "p": "บือระ", "m": "หนัก หน่วง", "x": false}, {"c": 3, "sub": "ลักษณะความเจ็บ/ความรู้สึกทางกาย", "j": "ڠيلو", "r": "ngilu", "p": "งีลู", "m": "เสียว ปวดแปลบ", "x": true}, {"c": 3, "sub": "ลักษณะความเจ็บ/ความรู้สึกทางกาย", "j": "—", "r": "—", "p": "ซอเอาะฮ", "m": "แน่น อึดอัด", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "سرابوت ڤروت", "r": "serabut perut", "p": "ซือราบุ ปือโระ", "m": "กลุ้มใจ", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "سرابوت", "r": "serabut", "p": "ซือราบุ", "m": "เครียด", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "سوسه", "r": "susah", "p": "ซูเซาะฮ", "m": "ลำบาก เดือดร้อน", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "مورڠ", "r": "murung", "p": "มูรุง, มอเยาะ", "m": "เศร้า ซึม", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "سديه هاتي", "r": "sedih hati", "p": "ซือเดะฮ ฮาตี", "m": "โศกเศร้า เจ็บช้ำใจ", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "تاکوت", "r": "takut", "p": "ตาโกะ", "m": "กลัว", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "ماره", "r": "marah", "p": "มาเราะฮ, มูเระฮ", "m": "โกรธ", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "مالو", "r": "malu", "p": "มาลู", "m": "อาย", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "جمو", "r": "jemu", "p": "จือมุฮ, ยือมุง", "m": "เบื่อหน่าย", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "ريساو", "r": "risau", "p": "รีเซา", "m": "กังวล", "x": true}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "فيکير باڽق", "r": "fikir banyak", "p": "ปีเก บาเญาะ", "m": "คิดมาก", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "تق نق هيدوڤ", "r": "tak nak hidup", "p": "เตาะ เนาะ ฮีโดะ", "m": "ไม่อยากมีชีวิตอยู่ (ต้องประเมินความเสี่ยงทันที)", "x": true}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "سنڠ", "r": "senang", "p": "ซือแน", "m": "สบาย", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "لڬا", "r": "lega", "p": "ลือกอ", "m": "โล่งอก", "x": false}, {"c": 3, "sub": "อารมณ์และจิตใจ", "j": "سوک هاتي", "r": "suka hati", "p": "ซูกอ ฮาตี", "m": "ดีใจ พอใจ", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "تق ساکيت", "r": "tak sakit", "p": "เตาะ ซาเกะ", "m": "ไม่เจ็บ", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "سيکيت", "r": "sikit", "p": "ซีกิ", "m": "นิดหน่อย", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "باڽق", "r": "banyak", "p": "บาเญาะ", "m": "มาก (ปริมาณ)", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "بنر", "r": "benar", "p": "บือนา", "m": "มาก จริงๆ (คุณภาพ)", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "برت", "r": "berat", "p": "บือระ", "m": "หนัก (ป่วยหนัก = ซาเกะ บือระ)", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "تق تاهن", "r": "tak tahan", "p": "เตาะ แตแฮ", "m": "ทนไม่ไหว", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "کورڠ", "r": "kurang", "p": "กูแร", "m": "น้อยลง ลดลง", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "سام", "r": "sama", "p": "ซามอ", "m": "เท่าเดิม เหมือนกัน", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "اچڤ", "r": "acap", "p": "อาจะ", "m": "บ่อย", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "—", "r": "sokmo", "p": "เซาะมอ", "m": "ประจำ ตลอด", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "همڤير", "r": "hampir", "p": "ฮาเป", "m": "เกือบ แทบ (แทบตาย = ฮาเป มาตี)", "x": false}, {"c": 4, "sub": "ระดับความรุนแรง", "j": "تيبا٢", "r": "tiba-tiba", "p": "ตีบอ-ตีบอ", "m": "อยู่ๆ ก็ เฉียบพลัน", "x": false}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "کوسوڠ", "r": "kosong", "p": "โกซง", "m": "0", "x": true}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "ساتو", "r": "satu", "p": "ซาตู", "m": "1", "x": false}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "دوا", "r": "dua", "p": "ดูวอ", "m": "2", "x": false}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "تيڬ", "r": "tiga", "p": "ตีกอ", "m": "3", "x": false}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "امڤت", "r": "empat", "p": "ปะ", "m": "4", "x": false}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "ليم", "r": "lima", "p": "ลีมอ", "m": "5", "x": false}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "انم", "r": "enam", "p": "แน", "m": "6", "x": true}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "توجوه", "r": "tujuh", "p": "ตูโยะฮ", "m": "7", "x": true}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "لاڤن", "r": "lapan", "p": "ลาแป", "m": "8", "x": false}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "سمبيلن", "r": "sembilan", "p": "ซือมีแล", "m": "9", "x": true}, {"c": 4, "sub": "ตัวเลข 0–10", "j": "سڤولوه", "r": "sepuluh", "p": "ซือปูโละฮ", "m": "10", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "بيلا", "r": "bila", "p": "บีลอ", "m": "เมื่อไร", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "براڤ لام", "r": "berapa lama", "p": "บือราปอ ลามอ", "m": "นานเท่าไร", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "هاري اين", "r": "hari ini", "p": "ฮารี นิง", "m": "วันนี้", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "سمالم", "r": "semalam", "p": "ซือมาแล", "m": "เมื่อวาน", "x": true}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "ڤاڬي", "r": "pagi", "p": "ปากี", "m": "เช้า", "x": true}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "تڠه هاري", "r": "tengah hari", "p": "ตือเงาะฮ ฮารี", "m": "เที่ยงวัน กลางวัน", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "ڤتڠ", "r": "petang", "p": "ปือแต", "m": "บ่าย เย็น", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "مالم", "r": "malam", "p": "มาแล", "m": "กลางคืน (บาเละ มาแล)", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "هاري", "r": "hari", "p": "ฮารี", "m": "วัน", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "ميڠڬو", "r": "minggu", "p": "มิงกู", "m": "สัปดาห์", "x": true}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "بولن", "r": "bulan", "p": "บูแล", "m": "เดือน", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "تاهون", "r": "tahun", "p": "ตาฮง", "m": "ปี", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "لڤس ماکن", "r": "lepas makan", "p": "ลือปะฮ มาแก", "m": "หลังอาหาร", "x": false}, {"c": 4, "sub": "เวลาและระยะเวลา", "j": "بلوم ماکن", "r": "belum makan", "p": "บือลง มาแก", "m": "ก่อนอาหาร", "x": false}, {"c": 5, "sub": null, "j": "ڤڽاکيت", "r": "penyakit", "p": "ปือญาเกะ", "m": "โรค", "x": false}, {"c": 5, "sub": null, "j": "کومن", "r": "kuman", "p": "กูแม", "m": "เชื้อโรค", "x": false}, {"c": 5, "sub": null, "j": "کنچيڠ مانيس", "r": "kencing manis", "p": "กือจิง มานิฮ", "m": "เบาหวาน", "x": false}, {"c": 5, "sub": null, "j": "داره تيڠڬي", "r": "darah tinggi", "p": "ดาเราะฮ ตีงี", "m": "ความดันโลหิตสูง", "x": true}, {"c": 5, "sub": null, "j": "ڤڽاکيت جنتوڠ", "r": "penyakit jantung", "p": "ปือญาเกะ ยาตง", "m": "โรคหัวใจ", "x": true}, {"c": 5, "sub": null, "j": "لومڤوه", "r": "lumpuh", "p": "ลมปุฮ", "m": "อัมพาต", "x": true}, {"c": 5, "sub": null, "j": "لله", "r": "lelah", "p": "ลือเลาะฮ", "m": "หอบหืด", "x": false}, {"c": 5, "sub": null, "j": "باتوق کريڠ", "r": "batuk kering", "p": "บาโตะ กือริง, วานาโระ", "m": "วัณโรค", "x": false}, {"c": 5, "sub": null, "j": "—", "r": "—", "p": "บือเกาะ จือลือปง", "m": "ปอดบวม", "x": false}, {"c": 5, "sub": null, "j": "دمم سلسما", "r": "demam selesema", "p": "ดือแม 'ซือมอ", "m": "ไข้หวัด", "x": false}, {"c": 5, "sub": null, "j": "دمم داره", "r": "demam darah", "p": "ดือแม 'ดาเราะฮ, ดือแม ตูเบะ ดาเราะฮ", "m": "ไข้เลือดออก", "x": false}, {"c": 5, "sub": null, "j": "ملاريا", "r": "malaria", "p": "มาลาเรีย", "m": "มาลาเรีย", "x": false}, {"c": 5, "sub": null, "j": "کورڠ داره", "r": "kurang darah", "p": "กูแร ดาเราะฮ", "m": "โลหิตจาง", "x": true}, {"c": 5, "sub": null, "j": "ساکيت کونيڠ", "r": "sakit kuning", "p": "ซาเกะ กูนิง", "m": "ดีซ่าน ตับอักเสบ", "x": true}, {"c": 5, "sub": null, "j": "کنچيڠ باتو", "r": "kencing batu", "p": "กือจิง บาตู", "m": "นิ่วทางเดินปัสสาวะ", "x": true}, {"c": 5, "sub": null, "j": "باره", "r": "barah", "p": "บาเราะฮ", "m": "ฝี ก้อนหนอง (ฝีในท้อง = บาเราะฮ ดาแล ปือโระ)", "x": false}, {"c": 5, "sub": null, "j": "کنسر", "r": "kanser", "p": "แกนเซ", "m": "มะเร็ง", "x": true}, {"c": 5, "sub": null, "j": "سوان", "r": "sawan", "p": "ซาแว", "m": "ลมชัก (โดยเฉพาะในเด็ก)", "x": false}, {"c": 5, "sub": null, "j": "واسير", "r": "wasir", "p": "วอเซ", "m": "ริดสีดวงทวาร", "x": false}, {"c": 5, "sub": null, "j": "—", "r": "—", "p": "บือรือเตะฮ", "m": "อีสุกอีใส", "x": false}, {"c": 5, "sub": null, "j": "چمڤق", "r": "campak", "p": "จาเปาะ", "m": "หัด", "x": false}, {"c": 5, "sub": null, "j": "کوديس", "r": "kudis", "p": "กูดิฮ", "m": "หิด", "x": false}, {"c": 5, "sub": null, "j": "کوراڤ", "r": "kurap", "p": "กูระ", "m": "กลาก", "x": false}, {"c": 5, "sub": null, "j": "اورڠ باءيق", "r": "orang baik", "p": "ออแร บา-เอะ", "m": "ไข้ทรพิษ ฝีดาษ (คำเลี่ยง แปลตรงว่า \"คนดี\")", "x": false}, {"c": 5, "sub": null, "j": "مات ميره", "r": "mata merah", "p": "มาตอ แมเราะฮ", "m": "ตาแดง", "x": false}, {"c": 5, "sub": null, "j": "—", "r": "—", "p": "ตือเกาะ กอนือง", "m": "คอพอก", "x": false}, {"c": 5, "sub": null, "j": "سست عقل", "r": "sesat akal", "p": "ซือซะ อากา", "m": "วิกลจริต (คำแรง ควรเลี่ยง)", "x": false}, {"c": 6, "sub": null, "j": "مڠندوڠ", "r": "mengandung", "p": "มืองานง", "m": "ตั้งครรภ์", "x": false}, {"c": 6, "sub": null, "j": "ڤروت بسر", "r": "perut besar", "p": "ปือโระ บือซา", "m": "มีท้อง", "x": false}, {"c": 6, "sub": null, "j": "کيريم ڤروت", "r": "kirim perut", "p": "กีเร็ง ปือโระ", "m": "ฝากครรภ์", "x": false}, {"c": 6, "sub": null, "j": "حيض", "r": "haid", "p": "เฮ", "m": "ประจำเดือน", "x": false}, {"c": 6, "sub": null, "j": "برانق", "r": "beranak", "p": "บือราเนาะ", "m": "คลอดลูก", "x": false}, {"c": 6, "sub": null, "j": "ساکيت ڤروت نق برانق", "r": "sakit perut nak beranak", "p": "ซาเกะ ปือโระ เนาะ บือราเนาะ", "m": "เจ็บท้องคลอด", "x": false}, {"c": 6, "sub": null, "j": "ڬوڬور", "r": "gugur", "p": "บือกอแร (อาเนาะ)", "m": "แท้งลูก", "x": false}, {"c": 6, "sub": null, "j": "جاتوه انق", "r": "jatuh anak", "p": "'ยาโตะฮ อาเนาะ", "m": "ทำแท้ง", "x": false}, {"c": 6, "sub": null, "j": "توق بيدن", "r": "tok bidan", "p": "โตะ บีแด", "m": "หมอตำแย ผดุงครรภ์ (ทำคลอด = 'บีแด)", "x": false}, {"c": 6, "sub": null, "j": "نفاس", "r": "nifas", "p": "นีฟะฮ", "m": "ช่วงหลังคลอด (ประมาณ 40 วัน)", "x": true}, {"c": 6, "sub": null, "j": "اءير کتوبن", "r": "air ketuban", "p": "อา-เอ กือตูแบ", "m": "น้ำคร่ำ", "x": true}, {"c": 6, "sub": null, "j": "بودق کچيق", "r": "budak kecik", "p": "บูเดาะ กือจิ", "m": "ทารก เด็กเล็ก", "x": false}, {"c": 6, "sub": null, "j": "بايي", "r": "bayi", "p": "บายี", "m": "ทารก", "x": false}, {"c": 6, "sub": null, "j": "بودق", "r": "budak", "p": "บูเดาะ", "m": "เด็ก", "x": false}, {"c": 6, "sub": null, "j": "انق", "r": "anak", "p": "อาเนาะ", "m": "ลูก", "x": false}, {"c": 6, "sub": null, "j": "سوسو", "r": "susu", "p": "ซูซู", "m": "นม น้ำนม", "x": false}, {"c": 6, "sub": null, "j": "مڽوسو", "r": "menyusu", "p": "มือญูซู", "m": "ดูดนม ให้นมลูก", "x": true}, {"c": 6, "sub": null, "j": "چوچوق اوبت", "r": "cucuk ubat", "p": "จอเจาะ อูบะ", "m": "ฉีดยา ฉีดวัคซีน", "x": false}, {"c": 6, "sub": null, "j": "برجارڠ", "r": "berjarang", "p": "บือยาแร", "m": "คุมกำเนิด", "x": false}, {"c": 6, "sub": null, "j": "اوبت جارڠ انق", "r": "ubat jarang anak", "p": "อูบะ 'ยาแร อาเนาะ", "m": "ยาคุมกำเนิด", "x": false}, {"c": 7, "sub": null, "j": "اوبت", "r": "ubat", "p": "อูบะ", "m": "ยา", "x": false}, {"c": 7, "sub": null, "j": "ماکن اوبت", "r": "makan ubat", "p": "มาแก อูบะ", "m": "กินยา", "x": false}, {"c": 7, "sub": null, "j": "ترلوڤا ماکن اوبت", "r": "terlupa makan ubat", "p": "ตือลูปอ มาแก อูบะ", "m": "ลืมกินยา", "x": false}, {"c": 7, "sub": null, "j": "چوچوق اوبت", "r": "cucuk ubat", "p": "จอเจาะ อูบะ", "m": "ฉีดยา", "x": false}, {"c": 7, "sub": null, "j": "اوبت ميره", "r": "ubat merah", "p": "อูบะ แมเราะฮ", "m": "ยาแดง (ใส่แผล)", "x": false}, {"c": 7, "sub": null, "j": "اوبت کبس", "r": "ubat kebas", "p": "อูบะ กือบะฮ", "m": "ยาชา", "x": false}, {"c": 7, "sub": null, "j": "اوبت ڤلالي", "r": "ubat pelali", "p": "อูบะ ปือลาลี", "m": "ยาสลบ", "x": false}, {"c": 7, "sub": null, "j": "اوبت تيدور", "r": "ubat tidur", "p": "อูบะ ตีโด", "m": "ยานอนหลับ", "x": false}, {"c": 7, "sub": null, "j": "جولڤ", "r": "julap", "p": "ยูละ", "m": "ยาถ่าย ยาระบาย", "x": false}, {"c": 7, "sub": null, "j": "اوبت کداي", "r": "ubat kedai", "p": "อูบะ กือดา", "m": "ยาแผนปัจจุบัน", "x": false}, {"c": 7, "sub": null, "j": "اوبت کامڤوڠ", "r": "ubat kampung", "p": "อูบะ กาปง", "m": "ยาสมุนไพร ยาพื้นบ้าน", "x": false}, {"c": 7, "sub": null, "j": "بوموه", "r": "bomoh", "p": "บอมอ", "m": "แพทย์ หมอ", "x": false}, {"c": 7, "sub": null, "j": "بوموه اوبت", "r": "bomoh ubat", "p": "บอมอ อูบะ", "m": "เภสัชกร", "x": false}, {"c": 7, "sub": null, "j": "بوموه بله", "r": "bomoh belah", "p": "บอมอ 'บือเลาะฮ", "m": "ศัลยแพทย์", "x": false}, {"c": 7, "sub": null, "j": "بله", "r": "belah", "p": "'บือเลาะฮ", "m": "ผ่าตัด", "x": false}, {"c": 7, "sub": null, "j": "جوروراوت", "r": "jururawat", "p": "ยูรู ราวะ", "m": "พยาบาล", "x": false}, {"c": 7, "sub": null, "j": "رومه سڤيتل", "r": "rumah sepital", "p": "รูเมาะฮ ซือปีตา, รูเมาะฮ ซาเกะ", "m": "โรงพยาบาล", "x": false}, {"c": 7, "sub": null, "j": "اورڠ ساکيت", "r": "orang sakit", "p": "ออแร ซาเกะ", "m": "คนไข้ (ผู้ป่วยนอก … ลูวา, ผู้ป่วยใน … ดาแล)", "x": false}, {"c": 7, "sub": null, "j": "براوبت ڤڽاکيت", "r": "berubat penyakit", "p": "ปือรูบะ ปือญาเกะ", "m": "รักษาโรค", "x": false}, {"c": 7, "sub": null, "j": "ڤريقسا", "r": "periksa", "p": "แปะซะ", "m": "ตรวจ", "x": false}, {"c": 7, "sub": null, "j": "ڤريقسا داره", "r": "periksa darah", "p": "แปะซะ ดาเราะฮ", "m": "ตรวจเลือด", "x": false}, {"c": 7, "sub": null, "j": "ايکس-ري", "r": "x-ray", "p": "เอ็กซือเร", "m": "เอกซเรย์", "x": false}, {"c": 7, "sub": null, "j": "—", "r": "—", "p": "ซียา", "m": "หาย (จากป่วย) หายไข้ = ซียา ดือแม", "x": false}, {"c": 7, "sub": null, "j": "توڠڬو اورڠ ساکيت", "r": "tunggu orang sakit", "p": "ตูงู ออแร ซาเกะ", "m": "เฝ้าไข้", "x": false}, {"c": 7, "sub": null, "j": "اوسوڠ", "r": "usung", "p": "อูซง", "m": "หาม (คนไข้)", "x": false}, {"c": 7, "sub": null, "j": "اوروت", "r": "urut", "p": "อูโระ", "m": "นวด", "x": false}, {"c": 7, "sub": null, "j": "باسوه ڤروت", "r": "basuh perut", "p": "บาโซะฮ ปือโระ", "m": "ล้างท้อง", "x": false}, {"c": 7, "sub": null, "j": "ڤريقسا مايت", "r": "periksa mayat", "p": "แปะซะ มายะ", "m": "ชันสูตรศพ", "x": false}, {"c": 7, "sub": null, "j": "ساله ماکن", "r": "salah makan", "p": "'ซาเลาะฮ มาแก", "m": "ผิดสำแดง (กินของแสลง)", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "السلام عليكم", "r": "Assalamualaikum", "p": "อัสสลามูอาลัยกุม", "m": "สวัสดี (ทักทายแบบมุสลิม)", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "نام اڤ؟", "r": "Nama apa?", "p": "นามอ อาปอ?", "m": "ชื่ออะไร", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "عمور براڤ؟", "r": "Umur berapa?", "p": "ออมอ บือราปอ?", "m": "อายุเท่าไร", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "ساکيت اڤ؟", "r": "Sakit apa?", "p": "ซาเกะ อาปอ?", "m": "ไม่สบายเป็นอะไร", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "ساکيت د مان؟", "r": "Sakit di mana?", "p": "ซาเกะ ดี มานอ?", "m": "เจ็บตรงไหน", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "ساکيت براڤ هاري سوده؟", "r": "Sakit berapa hari sudah?", "p": "ซาเกะ บือราปอ ฮารี เดาะฮ?", "m": "ป่วยมากี่วันแล้ว", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "دمم تق؟", "r": "Demam tak?", "p": "ดือแม เตาะ?", "m": "มีไข้ไหม", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "اد ڤڽاکيت تق؟", "r": "Ada penyakit tak?", "p": "อาดอ ปือญาเกะ เตาะ?", "m": "มีโรคประจำตัวไหม", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "ماکن اوبت اڤ؟", "r": "Makan ubat apa?", "p": "มาแก อูบะ อาปอ?", "m": "กินยาอะไรอยู่", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "ماکن ناسي بوليه تق؟", "r": "Makan nasi boleh tak?", "p": "มาแก นาซิ บูเละฮ เตาะ?", "m": "กินข้าวได้ไหม", "x": false}, {"c": 8, "sub": "ทักทายและซักประวัติ", "j": "تيدور لينا تق؟", "r": "Tidur lena tak?", "p": "ตีโด ยือนือรอ เตาะ?", "m": "นอนหลับไหม", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "تيدور", "r": "Tidur", "p": "ตีโด", "m": "นอนลง", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "دودوق", "r": "Duduk", "p": "ดูโดะ", "m": "นั่ง", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "برديري", "r": "Berdiri", "p": "บือดีรี", "m": "ยืน", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "تاريق ڽاوا", "r": "Tarik nyawa", "p": "ตาเระ ญาวอ", "m": "หายใจเข้า", "x": true}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "بوک مولوت", "r": "Buka mulut", "p": "บูกอ มูโละ", "m": "อ้าปาก", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "تونجوق", "r": "Tunjuk", "p": "ตูโญะ", "m": "ชี้ให้ดู", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "ساکيت تق؟", "r": "Sakit tak?", "p": "ซาเกะ เตาะ?", "m": "เจ็บไหม", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "تاهن سيکيت", "r": "Tahan sikit", "p": "แตแฮ ซีกิ", "m": "อดทนหน่อยนะ", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "جاڠن تاکوت", "r": "Jangan takut", "p": "ยาแง ตาโกะ", "m": "ไม่ต้องกลัว", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "تريما کاسيه", "r": "Terima kasih", "p": "ตือรีมอ กาเซะฮ", "m": "ขอบคุณ", "x": false}, {"c": 8, "sub": "ตรวจร่างกาย", "j": "مينتا معاف", "r": "Minta maaf", "p": "มีเตาะ มาอะฮ", "m": "ขอโทษ", "x": false}, {"c": 9, "sub": null, "j": "اڬام", "r": "agama", "p": "อูกามอ", "m": "ศาสนา", "x": false}, {"c": 9, "sub": null, "j": "اسلام", "r": "Islam", "p": "อีซือแล", "m": "อิสลาม", "x": false}, {"c": 9, "sub": null, "j": "ڤواس", "r": "puasa", "p": "ปอซอ", "m": "ถือศีลอด", "x": false}, {"c": 9, "sub": null, "j": "سمبهيڠ", "r": "sembahyang", "p": "ซือมาแย", "m": "ละหมาด", "x": false}, {"c": 9, "sub": null, "j": "حلال", "r": "halal", "p": "ฮาลาล", "m": "อนุมัติตามศาสนา", "x": true}, {"c": 9, "sub": null, "j": "حرام", "r": "haram", "p": "ฮาแร", "m": "ต้องห้าม", "x": true}, {"c": 9, "sub": null, "j": "بابي", "r": "babi", "p": "บาบี", "m": "หมู (สำคัญเรื่องแคปซูลเจลาติน)", "x": true}, {"c": 9, "sub": null, "j": "اورڠ جنتن", "r": "orang jantan", "p": "ออแร ยาแต", "m": "ผู้ชาย", "x": false}, {"c": 9, "sub": null, "j": "اورڠ بتينا", "r": "orang betina", "p": "ออแร 'ตีนอ", "m": "ผู้หญิง", "x": false}, {"c": 9, "sub": null, "j": "وارث", "r": "waris", "p": "วอเระฮ วาเระฮ", "m": "ญาติ คณาญาติ", "x": false}, {"c": 9, "sub": null, "j": "توق امام", "r": "tok imam", "p": "โตะ อีแม", "m": "อิหม่าม", "x": false}, {"c": 9, "sub": null, "j": "ماتي", "r": "mati", "p": "มาตี", "m": "ตาย", "x": false}, {"c": 9, "sub": null, "j": "مايت", "r": "mayat", "p": "มายะ", "m": "ศพ", "x": false}, {"c": 9, "sub": null, "j": "کوبور", "r": "kubur", "p": "กูโบ", "m": "สุสาน ป่าช้า", "x": false}, {"c": 11, "sub": "ขอความยินยอม", "j": "بوليه ساي ڤريقسا؟", "r": "Boleh saya periksa?", "p": "บูเละฮ อามอ แปะซะ?", "m": "ขอตรวจได้ไหม", "x": false}, {"c": 11, "sub": "ขอความยินยอม", "j": "ساي نق چوچوق اوبت", "r": "Saya nak cucuk ubat.", "p": "อามอ เนาะ จอเจาะ อูบะ", "m": "จะฉีดยานะ", "x": false}, {"c": 11, "sub": "ขอความยินยอม", "j": "ساي نق ڤريقسا داره", "r": "Saya nak periksa darah.", "p": "อามอ เนาะ แปะซะ ดาเราะฮ", "m": "จะตรวจเลือดนะ", "x": false}, {"c": 11, "sub": "เมื่อสื่อสารไม่ได้", "j": "ساي تق فهم", "r": "Saya tak faham.", "p": "อามอ เตาะ แปแฮ", "m": "ฉันไม่เข้าใจ", "x": false}, {"c": 11, "sub": "เมื่อสื่อสารไม่ได้", "j": "کچق لمبت سيکيت", "r": "Kecek lambat sikit.", "p": "แ'กแจะ ลามะ ซีกิ", "m": "พูดช้าๆ หน่อย", "x": false}, {"c": 11, "sub": "เมื่อสื่อสารไม่ได้", "j": "فهم تق؟", "r": "Faham tak?", "p": "แปแฮ เตาะ?", "m": "เข้าใจไหม", "x": false}, {"c": 11, "sub": "เรียกญาติ/ล่าม", "j": "ڤڠڬيل انق", "r": "Panggil anak.", "p": "ปาแง อาเนาะ", "m": "เรียกลูกมาหน่อย", "x": false}, {"c": 11, "sub": "ระหว่างรอ", "j": "توڠڬو سيکيت", "r": "Tunggu sikit.", "p": "ตูงู ซีกิ", "m": "รอสักครู่", "x": false}, {"c": 11, "sub": "ศีลอด/ผ่าตัด", "j": "ڤواس تق؟", "r": "Puasa tak?", "p": "ปอซอ เตาะ?", "m": "ถือศีลอดอยู่ไหม", "x": false}, {"c": 11, "sub": "ศีลอด/ผ่าตัด", "j": "مالم اين جاڠن ماکن", "r": "Malam ini jangan makan.", "p": "มาแล นิง ยาแง มาแก", "m": "คืนนี้งดอาหาร", "x": false}, {"c": 11, "sub": "ศีลอด/ผ่าตัด", "j": "ايسوق نق بله", "r": "Esok nak belah.", "p": "แอโซะ เนาะ 'บือเลาะฮ", "m": "พรุ่งนี้จะผ่าตัด", "x": true}, {"c": 11, "sub": "คำแนะนำกลับบ้าน", "j": "مينوم اءير باڽق", "r": "Minum air banyak.", "p": "มีนุง อา-เอ บาเญาะ", "m": "ดื่มน้ำมากๆ", "x": false}, {"c": 11, "sub": "คำแนะนำกลับบ้าน", "j": "بررهت دولو", "r": "Berehat dulu.", "p": "บือแรฮะ ดูลู", "m": "พักผ่อนก่อน", "x": false}, {"c": 11, "sub": "คำแนะนำกลับบ้าน", "j": "کالو ساکيت برت، ماري تروس", "r": "Kalau sakit berat, mari terus.", "p": "กาลู ซาเกะ บือระ มารี ตือรุฮ", "m": "ถ้าอาการหนักขึ้น ให้มาทันที", "x": true}, {"c": 11, "sub": "ให้กำลังใจ", "j": "ان شاء الله باءيق", "r": "Insya-Allah baik.", "p": "อินชาอัลลอฮ์ บา-เอะ", "m": "อินชาอัลลอฮ์ จะดีขึ้น", "x": false}, {"c": 11, "sub": "ปิดท้าย", "j": "تريما کاسيه", "r": "Terima kasih.", "p": "ตือรีมอ กาเซะฮ", "m": "ขอบคุณ", "x": false}], "dialogs": [{"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "หมอ", "j": "السلام عليكم، ساکيت اڤ؟", "r": "Assalamualaikum. Sakit apa?", "p": "อัสสลามูอาลัยกุม ซาเกะ อาปอ?", "m": "สวัสดีครับ ไม่สบายเป็นอะไร"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "ผู้ป่วย", "j": "دمم، باتوق", "r": "Demam, batuk.", "p": "ดือแม บาโตะ", "m": "มีไข้ ไอ"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "หมอ", "j": "براڤ هاري سوده؟", "r": "Berapa hari sudah?", "p": "บือราปอ ฮารี เดาะฮ?", "m": "กี่วันแล้ว"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "ผู้ป่วย", "j": "تيڬ هاري", "r": "Tiga hari.", "p": "ตีกอ ฮารี", "m": "สามวัน"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "หมอ", "j": "اد دهق تق؟", "r": "Ada dahak tak?", "p": "อาดอ รอเฮาะ เตาะ?", "m": "มีเสมหะไหม"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "ผู้ป่วย", "j": "اد، کونيڠ", "r": "Ada, kuning.", "p": "อาดอ กูนิง", "m": "มี สีเหลือง"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "หมอ", "j": "لله تق؟", "r": "Lelah tak?", "p": "ลือเลาะฮ เตาะ?", "m": "หอบไหม"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "ผู้ป่วย", "j": "تق", "r": "Tak.", "p": "เตาะ", "m": "ไม่"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "หมอ", "j": "بوک مولوت", "r": "Buka mulut.", "p": "บูกอ มูโละ", "m": "อ้าปาก"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "หมอ", "j": "ماکن اوبت اين تيڬ کالي سهاري، لڤس ماکن", "r": "Makan ubat ini tiga kali sehari, lepas makan.", "p": "มาแก อูบะ นิง ตีกอ กาลี ซือฮารี ลือปะฮ มาแก", "m": "กินยานี้วันละ 3 ครั้ง หลังอาหาร"}, {"s": "บทที่ 1 OPD: ไข้ ไอ", "who": "หมอ", "j": "کالو دمم تق کورڠ، ماري لاڬي", "r": "Kalau demam tak kurang, mari lagi.", "p": "กาลู ดือแม เตาะ กูแร มารี ลากี", "m": "ถ้าไข้ไม่ลด ให้มาอีก"}, {"s": "บทที่ 2 ห้องฉุกเฉิน: เจ็บหน้าอก", "who": "หมอ", "j": "ساکيت د مان؟ تونجوق", "r": "Sakit di mana? Tunjuk.", "p": "ซาเกะ ดี มานอ? ตูโญะ", "m": "เจ็บตรงไหน ชี้ให้ดู"}, {"s": "บทที่ 2 ห้องฉุกเฉิน: เจ็บหน้าอก", "who": "ผู้ป่วย", "j": "ساکيت دادا، برت", "r": "Sakit dada, berat.", "p": "ซาเกะ ดาดอ บือระ", "m": "เจ็บหน้าอก หนักๆ"}, {"s": "บทที่ 2 ห้องฉุกเฉิน: เจ็บหน้าอก", "who": "หมอ", "j": "ساکيت براڤ، ساتو سمڤاي سڤولوه؟", "r": "Sakit berapa, satu sampai sepuluh?", "p": "ซาเกะ บือราปอ ซาตู ซาปา ซือปูโละฮ?", "m": "เจ็บระดับไหน 1 ถึง 10"}, {"s": "บทที่ 2 ห้องฉุกเฉิน: เจ็บหน้าอก", "who": "ผู้ป่วย", "j": "لاڤن", "r": "Lapan.", "p": "ลาแป", "m": "8"}, {"s": "บทที่ 2 ห้องฉุกเฉิน: เจ็บหน้าอก", "who": "หมอ", "j": "اد داره تيڠڬي، کنچيڠ مانيس تق؟", "r": "Ada darah tinggi, kencing manis tak?", "p": "อาดอ ดาเราะฮ ตีงี กือจิง มานิฮ เตาะ?", "m": "มีความดัน เบาหวานไหม"}, {"s": "บทที่ 2 ห้องฉุกเฉิน: เจ็บหน้าอก", "who": "หมอ", "j": "کنا دودوق رومه سڤيتل", "r": "Kena duduk rumah sepital.", "p": "กือนอ ดูโดะ รูเมาะฮ ซือปีตา", "m": "ต้องนอนโรงพยาบาล"}, {"s": "บทที่ 2 ห้องฉุกเฉิน: เจ็บหน้าอก", "who": "หมอ", "j": "جاڠن تاکوت، کيت تولوڠ", "r": "Jangan takut, kita tolong.", "p": "ยาแง ตาโกะ กีตอ ตูลง", "m": "ไม่ต้องกลัว เราจะช่วย"}, {"s": "บทที่ 3 ฝากครรภ์", "who": "หมอ", "j": "مڠندوڠ براڤ بولن؟", "r": "Mengandung berapa bulan?", "p": "มืองานง บือราปอ บูแล?", "m": "ท้องกี่เดือนแล้ว"}, {"s": "บทที่ 3 ฝากครรภ์", "who": "ผู้ป่วย", "j": "ليم بولن", "r": "Lima bulan.", "p": "ลีมอ บูแล", "m": "5 เดือน"}, {"s": "บทที่ 3 ฝากครรภ์", "who": "หมอ", "j": "انق برڬرق تق؟", "r": "Anak bergerak tak?", "p": "อาเนาะ บือกือระ เตาะ? ※", "m": "ลูกดิ้นไหม"}, {"s": "บทที่ 3 ฝากครรภ์", "who": "หมอ", "j": "اد داره کلوار تق؟", "r": "Ada darah keluar tak?", "p": "อาดอ ดาเราะฮ ตูเบะ เตาะ?", "m": "มีเลือดออกไหม"}, {"s": "บทที่ 3 ฝากครรภ์", "who": "หมอ", "j": "کاکي بڠکق تق؟ ڤنيڠ تق؟", "r": "Kaki bengkak tak? Pening tak?", "p": "กากี บือเกาะ เตาะ? ปือนิง เตาะ?", "m": "เท้าบวมไหม เวียนหัวไหม"}, {"s": "บทที่ 3 ฝากครรภ์", "who": "หมอ", "j": "کالو ساکيت ڤروت نق برانق، ماري تروس", "r": "Kalau sakit perut nak beranak, mari terus.", "p": "กาลู ซาเกะ ปือโระ เนาะ บือราเนาะ มารี ตือรุฮ ※", "m": "ถ้าเจ็บท้องคลอด ให้มาทันที"}], "guide": [["-a ท้ายคำ", "-อ", "kepala → กือปาลอ, mata → มาตอ"], ["-an, -am", "-แ-", "tangan → ตาแง, makan → มาแก, malam → มาแล"], ["-at, -ak, -ap", "-ะ (เสียงกัก)", "ubat → อูบะ, otak → ออเตาะ"], ["-ut, -uk", "-โระ, -โละ, -โะ", "perut → ปือโระ, mulut → มูโละ, batuk → บาโตะ"], ["-ah", "-เาะฮ", "darah → ดาเราะฮ, lidah → ลีเดาะฮ"], ["-as, -is, -us", "-ะฮ, -ิฮ, -ุฮ", "panas → ปานะฮ, betis → บือติฮ, kudis → กูดิฮ"], ["-ung, -un", "-ง", "jantung → ยาตง, alun → อาลง"], ["-ing", "-ิง", "kencing → กือจิง"], ["-al, -ar", "ตัดเสียงท้าย", "gatal → กาตา, lapar → ลาปา"], ["e (pepet)", "ือ", "demam → ดือแม"], ["j บางคำ", "ย", "jari → ยารี, jantung → ยาตง"]]};
+const $ = s => document.querySelector(s);
+const store = {get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s||"").toLowerCase().replace(/['’\-\s\.\?,]/g,"");
+DATA.words.forEach((w,i)=>{w.id=i;w.key=norm(w.p+"|"+w.m+"|"+w.r+"|"+w.j+"|"+(w.sub||""))});
+let favs = new Set(store.get("favs",[]));
+let state = {cat: store.get("cat","all"), q:""};
+
+function toast(t){const el=$("#toast");el.textContent=t;el.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>el.classList.remove("show"),1400)}
+
+// tabs
+document.querySelectorAll("nav.tabs button").forEach(b=>b.addEventListener("click",()=>openTab(b.dataset.tab)));
+function openTab(t){
+  document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  ["dict","dlg","prac","guide"].forEach(x=>$("#p-"+x).hidden = x!==t);
+  store.set("tab",t);
+}
+
+// chips
+const chipDefs=[{id:"all",name:"ทั้งหมด"},{id:"fav",name:"★ บันทึกไว้"},...DATA.cats.map(c=>({id:String(c.id),name:c.name}))];
+$("#chips").innerHTML = chipDefs.map(c=>`<button class="chip" data-c="${c.id}">${esc(c.name)}</button>`).join("");
+$("#chips").addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;state.cat=b.dataset.c;store.set("cat",state.cat);render()});
+$("#q").addEventListener("input",e=>{state.q=e.target.value;render()});
+$("#optJawi").checked = store.get("jawi",true);
+$("#optJawi").addEventListener("change",e=>{store.set("jawi",e.target.checked);applyJawi()});
+$("#optVer").addEventListener("change",render);
+function applyJawi(){document.body.classList.toggle("hide-jawi",!$("#optJawi").checked)}
+
+function hl(text,q){if(!q)return esc(text);const i=text.toLowerCase().indexOf(q.toLowerCase());if(i<0)return esc(text);return esc(text.slice(0,i))+"<mark>"+esc(text.slice(i,i+q.length))+"</mark>"+esc(text.slice(i+q.length))}
+
+function render(){
+  document.querySelectorAll(".chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.c===state.cat));
+  const q=state.q.trim(), nq=norm(q), onlyVer=$("#optVer").checked;
+  let list=DATA.words.filter(w=>{
+    if(state.cat==="fav"&&!favs.has(w.id))return false;
+    if(state.cat!=="all"&&state.cat!=="fav"&&String(w.c)!==state.cat)return false;
+    if(onlyVer&&w.x)return false;
+    if(nq&&!w.key.includes(nq))return false;
+    return true});
+  // rank: exact meaning/pron hits first when searching
+  if(nq) list.sort((a,b)=>score(b,nq)-score(a,nq));
+  $("#count").textContent = `${list.length} รายการ`;
+  const cat=DATA.cats.find(c=>String(c.id)===state.cat);
+  let html = cat&&cat.note&&!q ? `<div class="catnote">${esc(cat.note)}</div>` : "";
+  if(!list.length){html+=`<div class="empty">${state.cat==="fav"?"ยังไม่ได้บันทึกคำ กดรูปดาวข้างคำเพื่อเก็บไว้ดูภายหลัง":"ไม่พบคำนี้ ลองพิมพ์คำไทยสั้นลง หรือค้นด้วยคำอ่าน"}</div>`}
+  else{
+    const groups=[];let cur=null;
+    list.forEach(w=>{const g = nq||state.cat==="fav" ? "" : (state.cat==="all"? catName(w.c) : (w.sub||""));
+      if(!cur||cur.g!==g){cur={g,items:[]};groups.push(cur)} cur.items.push(w)});
+    html+=groups.map(g=>(g.g?`<div class="group">${esc(g.g)}</div>`:"")+`<ul class="list">${g.items.map(w=>row(w,q)).join("")}</ul>`).join("");
+  }
+  $("#results").innerHTML=html;
+}
+function score(w,nq){const m=norm(w.m),p=norm(w.p),r=norm(w.r);return (m===nq||p===nq||r===nq?10:0)+(m.startsWith(nq)||p.startsWith(nq)||r.startsWith(nq)?5:0)-(w.c===11||w.c===8?1:0)}
+function catName(id){const c=DATA.cats.find(c=>c.id===id);return c?`หมวด ${id} · ${c.name}`:""}
+function row(w,q){
+  const tag = w.c===11&&w.sub ? `<span class="tag">${esc(w.sub)}</span>` : (q&&state.cat==="all"? `<span class="tag">${esc(DATA.cats.find(c=>c.id===w.c).name)}</span>`:"");
+  return `<li class="w">
+    <div class="say">${hl(w.p,q)}${w.x?'<span class="flag" title="ไม่พบในพจนานุกรม">ยังไม่ยืนยัน</span>':""}</div>
+    <div class="acts">
+      <button class="icon" data-copy="${w.id}" aria-label="คัดลอกคำอ่าน" title="คัดลอก"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
+      <button class="icon" data-fav="${w.id}" aria-pressed="${favs.has(w.id)}" aria-label="บันทึกคำ" title="บันทึก"><svg width="18" height="18" viewBox="0 0 24 24" fill="${favs.has(w.id)?"currentColor":"none"}" stroke="currentColor" stroke-width="2"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></button>
+    </div>
+    <div class="mean">${tag}${hl(w.m,q)}</div>
+    <div class="meta"><span class="rumi">${w.r==="—"?"คำถิ่น ไม่มีรูปมาตรฐาน":hl(w.r,q)}</span>${w.j&&w.j!=="—"?`<span class="jawi" lang="ms-Arab">${esc(w.j)}</span>`:""}</div>
+  </li>`}
+$("#results").addEventListener("click",e=>{
+  const f=e.target.closest("[data-fav]"), c=e.target.closest("[data-copy]");
+  if(f){const id=+f.dataset.fav; favs.has(id)?favs.delete(id):favs.add(id); store.set("favs",[...favs]); render(); toast(favs.has(id)?"บันทึกแล้ว":"เอาออกแล้ว")}
+  if(c){const w=DATA.words[+c.dataset.copy];const t=`${w.p} (${w.m})`;
+    navigator.clipboard?.writeText(t).then(()=>toast("คัดลอกแล้ว")).catch(()=>toast(t))}
+});
+
+// dialogues
+(function(){
+  const scenes=[];DATA.dialogs.forEach(d=>{let s=scenes.find(x=>x.s===d.s);if(!s){s={s:d.s,t:[]};scenes.push(s)}s.t.push(d)});
+  $("#dialogs").innerHTML=`<p class="sub" style="margin-top:16px">ประโยคเรียบเรียงจากคำในพจนานุกรม ควรให้เจ้าของภาษาฟังและแก้ก่อนใช้จริง</p>`+scenes.map(s=>`<div class="scene"><h2>${esc(s.s)}</h2>${s.t.map(d=>{
+    const pt=d.who!=="หมอ";return `<div class="turn ${pt?"pt":"doc"}"><div class="bubble"><div class="who">${esc(d.who)}</div><div class="say">${esc(d.p.replace("※",""))}</div><div class="mean">${esc(d.m)}</div><div class="rumi">${esc(d.r)}</div><div class="jawi" lang="ms-Arab">${esc(d.j)}</div></div></div>`}).join("")}</div>`).join("");
+})();
+
+// practice
+const pCat=$("#pCat");
+pCat.innerHTML=`<option value="all">ทุกหมวด (คำศัพท์)</option><option value="fav">คำที่บันทึกไว้</option>`+DATA.cats.map(c=>`<option value="${c.id}">หมวด ${c.id} ${esc(c.name)}</option>`).join("");
+let deck=[],idx=0,flipped=false,got=0;
+function buildDeck(){
+  const v=pCat.value;
+  deck=DATA.words.filter(w=>v==="all"?w.c<=7||w.c===9:v==="fav"?favs.has(w.id):String(w.c)===v);
+  for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}
+  idx=0;got=0;flipped=false;showCard();
+}
+function showCard(){
+  const total=deck.length;
+  $("#pStat").textContent = total? `บัตร ${Math.min(idx+1,total)} จาก ${total} · จำได้ ${got}` : "";
+  $("#pBar").style.width = total? (idx/total*100)+"%" : "0";
+  const card=$("#card");
+  if(!total){card.innerHTML=`<div><div class="q">ยังไม่มีบัตรในชุดนี้</div><div class="hint">บันทึกคำในแท็บคำศัพท์ หรือเลือกหมวดอื่น</div></div>`;return}
+  if(idx>=total){card.innerHTML=`<div><div class="q">ครบชุดแล้ว</div><div class="hint">จำได้ ${got} จาก ${total} คำ · แตะเพื่อสับบัตรใหม่</div></div>`;return}
+  const w=deck[idx], th=$("#pDir").value==="th";
+  const front = th? `<div class="q">${esc(w.m)}</div>` : `<div class="q">${esc(w.p)}</div>`;
+  const back = th? `<div class="a">${esc(w.p)}</div><div class="rumi">${esc(w.r)}</div>${w.j!=="—"?`<div class="jawi">${esc(w.j)}</div>`:""}` : `<div class="a">${esc(w.m)}</div><div class="rumi">${esc(w.r)}</div>`;
+  card.innerHTML = `<div>${front}${flipped?`<div style="margin-top:16px">${back}</div>`:`<div class="hint">แตะเพื่อดูคำตอบ</div>`}${w.x?'<div class="hint"><span class="flag">ยังไม่ยืนยัน</span></div>':""}</div>`;
+}
+$("#card").addEventListener("click",()=>{if(idx>=deck.length){buildDeck();return}flipped=!flipped;showCard()});
+$("#card").addEventListener("keydown",e=>{if(e.key===" "||e.key==="Enter"){e.preventDefault();$("#card").click()}});
+$("#pGot").addEventListener("click",()=>{if(idx<deck.length){got++;idx++;flipped=false;showCard()}});
+$("#pAgain").addEventListener("click",()=>{if(idx<deck.length){deck.push(deck.splice(idx,1)[0]);flipped=false;showCard()}});
+pCat.addEventListener("change",buildDeck);$("#pDir").addEventListener("change",()=>{flipped=false;showCard()});
+
+// guide
+$("#guide").innerHTML=`
+<h2>อ่านคำอ่านอย่างไร</h2>
+<p>ช่องคำอ่านสะกดด้วยอักษรไทยตามระบบของพจนานุกรมอ้างอิง เครื่องหมาย <b>'</b> หน้าคำแปลว่าพยัญชนะต้นออกเสียงยาวหรือหนัก ซึ่งเปลี่ยนความหมายได้ เช่น ตือลอ = ไข่ แต่ 'ตือลอ = วางไข่</p>
+<p>มลายูปาตานีไม่มีวรรณยุกต์ การเน้นพยางค์ไม่เปลี่ยนความหมาย แต่ทำนองเสียงท้ายประโยคเปลี่ยนประโยคบอกเล่าเป็นคำถามได้ เช่น ขึ้นเสียงท้าย "ดือแม เตาะ?" = มีไข้ไหม</p>
+<h2>เทียบเสียงกับภาษามลายูมาตรฐาน</h2>
+<div class="tbl"><table><thead><tr><th>รูมี (มาตรฐาน)</th><th>ปาตานีออกเสียงเป็น</th><th>ตัวอย่าง</th></tr></thead><tbody>
+${DATA.guide.map(r=>`<tr><td><code>${esc(r[0])}</code></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join("")}
+</tbody></table></div>
+<h2>รูมีและยาวี</h2>
+<p>ภาษาถิ่นไม่มีตัวสะกดมาตรฐาน ช่องรูมีและยาวีจึงใช้รูปภาษามลายูมาตรฐานของคำเดียวกัน คำถิ่นแท้ที่ไม่มีคู่ในภาษามาตรฐานแสดงว่า "คำถิ่น ไม่มีรูปมาตรฐาน" ตัวสะกดยาวีควรให้ผู้รู้ตรวจทานอีกครั้ง</p>
+<h2>ข้อควรระวังทางคลินิก</h2>
+<p>ใช้แอปนี้ช่วยซักประวัติเบื้องต้นเท่านั้น การแจ้งข่าวร้าย การขอความยินยอมผ่าตัด และการประเมินความเสี่ยงฆ่าตัวตาย ควรใช้ล่ามโรงพยาบาลเสมอ</p>`;
+
+applyJawi();
+if(!chipDefs.some(c=>c.id===state.cat))state.cat="all";
+render(); buildDeck();
+openTab(store.get("tab","dict"));
+</script>
+
+</body></html>
